@@ -1,0 +1,155 @@
+### Orange Box API - Provider Endpoints
+### Base URL: http://localhost:3000/api/v1
+
+@baseUrl = http://localhost:3000/api/v1
+@providerId = 64a7b8c9d1234567890abcde
+
+### Health Check
+GET {{baseUrl}}/../../
+Content-Type: application/json
+
+### ================================
+### PROVIDER ENDPOINTS
+### ================================
+
+### 1. Create Provider
+POST {{baseUrl}}/providers
+Content-Type: application/json
+
+{
+  "name": "Tech Solutions Inc",
+  "address": "123 Tech Street, Silicon Valley, CA 94000",
+  "phone": "+1-555-0123",
+  "email": "contact@techsolutions.com",
+  "description": "Leading technology solutions provider specializing in enterprise software and hardware solutions"
+}
+
+### 2. Create Another Provider (for testing)
+POST {{baseUrl}}/providers
+Content-Type: application/json
+
+{
+  "name": "Digital Innovations Ltd",
+  "address": "456 Innovation Ave, New York, NY 10001",
+  "phone": "+1-555-0456",
+  "email": "info@digitalinnovations.com",
+  "description": "Cutting-edge digital transformation services"
+}
+
+### 3. Get All Providers (Basic)
+GET {{baseUrl}}/providers
+Content-Type: application/json
+
+### 4. Get All Providers (With Pagination)
+GET {{baseUrl}}/providers?page=1&limit=5
+Content-Type: application/json
+
+### 5. Get All Providers (With Sorting)
+GET {{baseUrl}}/providers?sortBy=name&order=asc
+Content-Type: application/json
+
+### 6. Get All Providers (With Search)
+GET {{baseUrl}}/providers?search=tech
+Content-Type: application/json
+
+### 7. Get All Providers (With Field Selection)
+GET {{baseUrl}}/providers?fields=name,phone,email
+Content-Type: application/json
+
+### 8. Get All Providers (Complex Query)
+GET {{baseUrl}}/providers?page=1&limit=10&sortBy=createdAt&order=desc&search=tech&fields=name,address,phone,email
+Content-Type: application/json
+
+### 9. Get Provider by ID
+GET {{baseUrl}}/providers/{{providerId}}
+Content-Type: application/json
+
+### 10. Get Provider by ID (With Field Selection)
+GET {{baseUrl}}/providers/{{providerId}}?fields=name,address,phone
+Content-Type: application/json
+
+### 11. Update Provider (PATCH - Partial Update)
+PATCH {{baseUrl}}/providers/{{providerId}}
+Content-Type: application/json
+
+{
+  "name": "Updated Tech Solutions Inc",
+  "email": "newemail@techsolutions.com",
+  "description": "Updated description - Leading technology solutions provider with expanded services"
+}
+
+### 12. Replace Provider (PUT - Full Update)
+PUT {{baseUrl}}/providers/{{providerId}}
+Content-Type: application/json
+
+{
+  "name": "Completely New Provider Name",
+  "address": "789 New Address, New City, CA 90210",
+  "phone": "+1-555-9999",
+  "email": "newcontact@newprovider.com",
+  "description": "Completely updated provider description"
+}
+
+### 13. Delete Provider
+DELETE {{baseUrl}}/providers/{{providerId}}
+Content-Type: application/json
+
+### ================================
+### ERROR TESTING
+### ================================
+
+### 14. Create Provider with Invalid Data (Missing Required Fields)
+POST {{baseUrl}}/providers
+Content-Type: application/json
+
+{
+  "name": "Incomplete Provider"
+  // Missing address, phone, description
+}
+
+### 15. Create Provider with Invalid Email
+POST {{baseUrl}}/providers
+Content-Type: application/json
+
+{
+  "name": "Invalid Email Provider",
+  "address": "123 Test St",
+  "phone": "+1-555-0000",
+  "email": "invalid-email",
+  "description": "Provider with invalid email"
+}
+
+### 16. Get Provider with Invalid ID Format
+GET {{baseUrl}}/providers/invalid-id-format
+Content-Type: application/json
+
+### 17. Get Non-existent Provider
+GET {{baseUrl}}/providers/507f1f77bcf86cd799439011
+Content-Type: application/json
+
+### 18. Update Non-existent Provider
+PATCH {{baseUrl}}/providers/507f1f77bcf86cd799439011
+Content-Type: application/json
+
+{
+  "name": "This provider doesn't exist"
+}
+
+### 19. Delete Non-existent Provider
+DELETE {{baseUrl}}/providers/507f1f77bcf86cd799439011
+Content-Type: application/json
+
+### ================================
+### DUPLICATE NAME TESTING
+### ================================
+
+### 20. Try to Create Provider with Existing Name (Should fail with 409)
+POST {{baseUrl}}/providers
+Content-Type: application/json
+
+{
+  "name": "Tech Solutions Inc",
+  "address": "Different Address",
+  "phone": "+1-555-7777",
+  "description": "Different description but same name"
+} 

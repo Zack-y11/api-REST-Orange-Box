@@ -1,0 +1,245 @@
+
+
+@baseUrl = http://localhost:3000/api/v1
+@productId = 64a7b8c9d1234567890abcde
+@providerId = 64a7b8c9d1234567890abcde
+
+### ================================
+### PRODUCT ENDPOINTS
+### ================================
+
+### 1. Create Product
+POST {{baseUrl}}/products
+Content-Type: application/json
+
+{
+  "name": "Premium Laptop",
+  "price": 1299.99,
+  "description": "High-performance laptop with latest specifications including 16GB RAM, 512GB SSD, and Intel i7 processor",
+  "provider": "{{providerId}}",
+  "stock": 50,
+  "status": "active"
+}
+
+### 2. Create Another Product (for testing)
+POST {{baseUrl}}/products
+Content-Type: application/json
+
+{
+  "name": "Wireless Mouse",
+  "price": 29.99,
+  "description": "Ergonomic wireless mouse with precision tracking",
+  "provider": "{{providerId}}",
+  "stock": 100,
+  "status": "active"
+}
+
+### 3. Create Inactive Product
+POST {{baseUrl}}/products
+Content-Type: application/json
+
+{
+  "name": "Old Keyboard",
+  "price": 15.99,
+  "description": "Legacy keyboard model",
+  "provider": "{{providerId}}",
+  "stock": 5,
+  "status": "inactive"
+}
+
+### 4. Get All Products (Basic)
+GET {{baseUrl}}/products
+Content-Type: application/json
+
+### 5. Get All Products (With Pagination)
+GET {{baseUrl}}/products?page=1&limit=5
+Content-Type: application/json
+
+### 6. Get All Products (With Sorting by Price)
+GET {{baseUrl}}/products?sortBy=price&order=asc
+Content-Type: application/json
+
+### 7. Get All Products (With Search)
+GET {{baseUrl}}/products?search=laptop
+Content-Type: application/json
+
+### 8. Get All Products (Filter by Status)
+GET {{baseUrl}}/products?status=active
+Content-Type: application/json
+
+### 9. Get All Products (Filter by Provider)
+GET {{baseUrl}}/products?provider={{providerId}}
+Content-Type: application/json
+
+### 10. Get All Products (Price Range Filter)
+GET {{baseUrl}}/products?minPrice=20&maxPrice=100
+Content-Type: application/json
+
+### 11. Get All Products (With Field Selection)
+GET {{baseUrl}}/products?fields=name,price,stock,status
+Content-Type: application/json
+
+### 12. Get All Products (Complex Query)
+GET {{baseUrl}}/products?page=1&limit=10&sortBy=price&order=desc&search=laptop&status=active&minPrice=1000&fields=name,price,description,stock
+Content-Type: application/json
+
+### 13. Get Product by ID
+GET {{baseUrl}}/products/{{productId}}
+Content-Type: application/json
+
+### 14. Get Product by ID (With Field Selection)
+GET {{baseUrl}}/products/{{productId}}?fields=name,price,stock,provider
+Content-Type: application/json
+
+### 15. Get Products by Provider ID
+GET {{baseUrl}}/products/provider/{{providerId}}
+Content-Type: application/json
+
+### 16. Get Products by Provider ID (With Pagination)
+GET {{baseUrl}}/products/provider/{{providerId}}?page=1&limit=5&sortBy=name&order=asc
+Content-Type: application/json
+
+### 17. Update Product (PUT - Full Update)
+PUT {{baseUrl}}/products/{{productId}}
+Content-Type: application/json
+
+{
+  "name": "Updated Premium Laptop",
+  "price": 1199.99,
+  "description": "Updated high-performance laptop with latest specifications and improved battery life",
+  "provider": "{{providerId}}",
+  "stock": 30,
+  "status": "active"
+}
+
+### 18. Update Product (PATCH - Partial Update)
+PATCH {{baseUrl}}/products/{{productId}}
+Content-Type: application/json
+
+{
+  "price": 999.99,
+  "stock": 25,
+  "status": "inactive"
+}
+
+### 19. Delete Product
+DELETE {{baseUrl}}/products/{{productId}}
+Content-Type: application/json
+
+### ================================
+### ERROR TESTING
+### ================================
+
+### 20. Create Product with Invalid Data (Missing Required Fields)
+POST {{baseUrl}}/products
+Content-Type: application/json
+
+{
+  "name": "Incomplete Product"
+  // Missing price, description, provider, stock
+}
+
+### 21. Create Product with Invalid Price (Negative)
+POST {{baseUrl}}/products
+Content-Type: application/json
+
+{
+  "name": "Invalid Price Product",
+  "price": -50.00,
+  "description": "Product with negative price",
+  "provider": "{{providerId}}",
+  "stock": 10,
+  "status": "active"
+}
+
+### 22. Create Product with Invalid Provider ID Format
+POST {{baseUrl}}/products
+Content-Type: application/json
+
+{
+  "name": "Invalid Provider Product",
+  "price": 99.99,
+  "description": "Product with invalid provider ID",
+  "provider": "invalid-provider-id",
+  "stock": 10,
+  "status": "active"
+}
+
+### 23. Create Product with Invalid Stock (Negative)
+POST {{baseUrl}}/products
+Content-Type: application/json
+
+{
+  "name": "Invalid Stock Product",
+  "price": 99.99,
+  "description": "Product with negative stock",
+  "provider": "{{providerId}}",
+  "stock": -5,
+  "status": "active"
+}
+
+### 24. Create Product with Invalid Status
+POST {{baseUrl}}/products
+Content-Type: application/json
+
+{
+  "name": "Invalid Status Product",
+  "price": 99.99,
+  "description": "Product with invalid status",
+  "provider": "{{providerId}}",
+  "stock": 10,
+  "status": "invalid-status"
+}
+
+### 25. Get Product with Invalid ID Format
+GET {{baseUrl}}/products/invalid-id-format
+Content-Type: application/json
+
+### 26. Get Non-existent Product
+GET {{baseUrl}}/products/507f1f77bcf86cd799439011
+Content-Type: application/json
+
+### 27. Get Products by Invalid Provider ID Format
+GET {{baseUrl}}/products/provider/invalid-provider-id
+Content-Type: application/json
+
+### 28. Update Non-existent Product
+PUT {{baseUrl}}/products/507f1f77bcf86cd799439011
+Content-Type: application/json
+
+{
+  "name": "This product doesn't exist",
+  "price": 100.00,
+  "description": "Non-existent product",
+  "provider": "{{providerId}}",
+  "stock": 1,
+  "status": "active"
+}
+
+### 29. Delete Non-existent Product
+DELETE {{baseUrl}}/products/507f1f77bcf86cd799439011
+Content-Type: application/json
+
+### ================================
+### ADVANCED FILTERING TESTS
+### ================================
+
+### 30. Products with Multiple Filters
+GET {{baseUrl}}/products?status=active&minPrice=50&maxPrice=500&sortBy=name&order=asc&page=1&limit=5
+Content-Type: application/json
+
+### 31. Search with Multiple Terms
+GET {{baseUrl}}/products?search=premium laptop high performance
+Content-Type: application/json
+
+### 32. Products with Zero Stock
+GET {{baseUrl}}/products?stock=0
+Content-Type: application/json
+
+### 33. Discontinued Products
+GET {{baseUrl}}/products?status=discontinued
+Content-Type: application/json
+
+### 34. Expensive Products (Above $1000)
+GET {{baseUrl}}/products?minPrice=1000&sortBy=price&order=desc
+Content-Type: application/json 
