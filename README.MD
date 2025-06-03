@@ -26,9 +26,9 @@ A REST API for managing products and providers built with Node.js, Express, Type
    Create a `.env` file in the root directory:
    ```env
    PORT=3000
-   MONGO_URI=mongodb://localhost:27017/orange-box
+   MONGO_URI=
    # OR use MongoDB Atlas
-   # MONGO_URI=mongodb+srv://username:password@cluster.mongodb.net/orange-box
+   # MONGO_URI=
    
    # Optional for deployment
    RAILWAY_URL=https://your-app.railway.app
