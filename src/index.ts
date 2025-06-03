@@ -20,6 +20,11 @@ const app = express();
 
 app.use(express.json());
 app.use(morgan('dev'));
+const railway = process.env.RAILWAY_URL;
+const vercel = process.env.VERCEL_URL;
+if (!railway || !vercel) {
+    console.error('RAILWAY_URL or VERCEL_URL is not set');
+}
 
 // CORS configuration
 const corsOptions = {
@@ -27,8 +32,8 @@ const corsOptions = {
         'http://localhost:3000',
         'http://localhost:5173',
         'http://localhost:4173',
-        'https://orange-box-frontend-production.up.railway.app',
-        'https://orange-box-frontend.vercel.app/'
+        `${railway}`,
+        `${vercel}`
     ],
     credentials: true,
     optionsSuccessStatus: 200,
