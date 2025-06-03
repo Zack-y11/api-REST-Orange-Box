@@ -20,7 +20,23 @@ const app = express();
 
 app.use(express.json());
 app.use(morgan('dev'));
-app.use(cors());
+
+// CORS configuration
+const corsOptions = {
+    origin: [
+        'http://localhost:3000',
+        'http://localhost:5173',
+        'http://localhost:4173',
+        'https://orange-box-frontend-production.up.railway.app',
+        'https://orange-box-frontend.vercel.app/'
+    ],
+    credentials: true,
+    optionsSuccessStatus: 200,
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With']
+};
+
+app.use(cors(corsOptions));
 
 app.get('/', (req, res) => {
     res.send('Welcome to the Orange Box API - Check out our documentation at /api-docs');
